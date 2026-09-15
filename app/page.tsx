@@ -117,7 +117,7 @@ export default function Home() {
           </div>
         </section>
 
-        <Section id="experience" title="Experience" subtitle="다양한 환경에서 넓은 경험을 쌓습니다.">
+        <Section id="experience" title="Experience" subtitle="다양한 환경에서 쌓은 경험들입니다.">
           <div className="experience-stack">
             {experienceCards.map((_, index) => (
               <div className="placeholder experience-card" key={index} />
