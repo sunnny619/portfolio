@@ -1,11 +1,11 @@
 import Image from "next/image";
 import ExperienceList from "./experience-list";
 import HeroTitle from "./hero-title";
+import PostList from "./post-list";
 import ProjectStack from "./project-stack";
 import ScrollMotion from "./scroll-motion";
 import SiteHeader from "./site-header";
 
-const postCards = Array.from({ length: 4 });
 
 export default function Home() {
   return (
@@ -136,11 +136,7 @@ export default function Home() {
         </Section>
 
         <Section id="posts" title="Posts" subtitle="공부한 내용과 코딩 테스트 풀이를 기록합니다.">
-          <div className="post-stack">
-            {postCards.map((_, index) => (
-              <div className="placeholder post-card" key={index} />
-            ))}
-          </div>
+          <PostList />
         </Section>
       </main>
 
