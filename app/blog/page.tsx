@@ -80,10 +80,6 @@ export default async function BlogPage({
                 </li>
               ))}
             </ul>
-
-            <Link className="post-more" href="/">
-              포트폴리오로 돌아가기
-            </Link>
           </section>
         </div>
       </main>
