@@ -6,6 +6,7 @@ import SiteHeader from "@/app/site-header";
 import { getAllPosts, getPost } from "@/lib/posts";
 import { renderMarkdown } from "@/lib/markdown";
 
+import HeartButton from "./heart-button";
 import ArticleToc from "./toc";
 
 type Props = {
@@ -61,6 +62,9 @@ export default async function BlogPostPage({ params }: Props) {
             </header>
 
             <div className="article-body">{blocks}</div>
+            <footer className="article-actions">
+              <HeartButton slug={post.slug} />
+            </footer>
           </article>
 
           <aside className="article-side">

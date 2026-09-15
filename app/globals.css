@@ -814,6 +814,7 @@ a {
   grid-template-columns: minmax(0, 760px) 240px;
   gap: 80px;
   align-items: start;
+  justify-content: center;
 }
 
 .article {
@@ -837,6 +838,67 @@ a {
   color: #777;
   font-size: 15px;
   line-height: 1.75;
+}
+
+.heart-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 82px;
+  height: 42px;
+  padding: 0 17px;
+  border: 1px solid #ebeae4;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #b0b0b0;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.heart-button span {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.heart-button b {
+  font-size: 13px;
+}
+
+.heart-button:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+  transform: translateY(-1px);
+}
+
+.heart-button.is-liked {
+  border-color: #ffd8c4;
+  background: #ffe9dd;
+  color: #c2441a;
+}
+
+.heart-button:disabled {
+  cursor: wait;
+  opacity: 0.58;
+  transform: none;
+}
+
+.heart-button:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
+}
+
+.article-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 64px;
+  padding-top: 34px;
+  border-top: 1px solid #ebeae4;
 }
 
 .article-body {

@@ -190,6 +190,12 @@
   },
   "active": "05cdda5cb38cc835",
   "lastOpenFiles": [
+    "app/blog/[slug]/heart-button.tsx",
+    "app/api/hearts/[slug]/route.ts",
+    "app/api/hearts/[slug]",
+    "app/api/hearts",
+    "app/api",
+    "lib/hearts.ts",
     "CLAUDE.md",
     "README.md",
     "content/posts/event-loop-interview.md",
