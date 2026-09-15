@@ -1,10 +1,10 @@
 import Image from "next/image";
+import ExperienceList from "./experience-list";
 import HeroTitle from "./hero-title";
+import ProjectStack from "./project-stack";
 import ScrollMotion from "./scroll-motion";
 import SiteHeader from "./site-header";
 
-const experienceCards = Array.from({ length: 4 });
-const projectCards = Array.from({ length: 5 });
 const postCards = Array.from({ length: 4 });
 
 export default function Home() {
@@ -117,20 +117,22 @@ export default function Home() {
           </div>
         </section>
 
-        <Section id="experience" title="Experience" subtitle="다양한 환경에서 쌓은 경험들입니다.">
-          <div className="experience-stack">
-            {experienceCards.map((_, index) => (
-              <div className="placeholder experience-card" key={index} />
-            ))}
-          </div>
+        <Section
+          id="experience"
+          title="Experience"
+          subtitle="다양한 환경에서 쌓은 경험들입니다."
+          motionBody={false}
+        >
+          <ExperienceList />
         </Section>
 
-        <Section id="projects" title="Projects" subtitle="다양한 기술을 활용하여 개발한 프로젝트들입니다.">
-          <div className="project-grid">
-            {projectCards.map((_, index) => (
-              <div className="placeholder project-card" key={index} />
-            ))}
-          </div>
+        <Section
+          id="projects"
+          title="Projects"
+          subtitle="다양한 기술을 활용하여 개발한 프로젝트들입니다."
+          motionBody={false}
+        >
+          <ProjectStack />
         </Section>
 
         <Section id="posts" title="Posts" subtitle="공부한 내용과 코딩 테스트 풀이를 기록합니다.">
@@ -178,11 +180,14 @@ function Section({
   title,
   subtitle,
   children,
+  motionBody = true,
 }: {
   id: string;
   title: string;
   subtitle: string;
   children: React.ReactNode;
+  /** false 면 본문을 통째로 올리지 않고, 안쪽 요소가 각자 모션을 갖는다 */
+  motionBody?: boolean;
 }) {
   return (
     <section className="content-section motion-section" id={id}>
@@ -190,7 +195,7 @@ function Section({
         <h2>{title}</h2>
         <p>{subtitle}</p>
       </div>
-      <div className="motion-item">{children}</div>
+      {motionBody ? <div className="motion-item">{children}</div> : children}
     </section>
   );
 }

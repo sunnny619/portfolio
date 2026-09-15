@@ -22,7 +22,10 @@ export default function ScrollMotion() {
     );
 
     items.forEach((item, index) => {
-      if (item.classList.contains("profile-motion-1")) {
+      if (item.classList.contains("exp-card")) {
+        // 카드가 각자 화면에 들어올 때 하나씩 올라온다
+        item.style.setProperty("--motion-delay", "0ms");
+      } else if (item.classList.contains("profile-motion-1")) {
         item.style.setProperty("--motion-delay", "0ms");
       } else if (item.classList.contains("profile-motion-2")) {
         item.style.setProperty("--motion-delay", "140ms");
