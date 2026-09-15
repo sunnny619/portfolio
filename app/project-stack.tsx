@@ -50,7 +50,7 @@ export default function ProjectStack() {
               alt={project.alt}
               width={1500}
               height={844}
-              sizes="(max-width: 900px) 100vw, 1400px"
+              sizes="(max-width: 900px) 100vw, min(100vw, 1500px)"
               quality={95}
               priority={index === 0}
             />

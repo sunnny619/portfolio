@@ -24,6 +24,7 @@ pnpm-debug.log*
 
 # os/editor
 .DS_Store
+.obsidian/
 *.swp
 *.swo
 
