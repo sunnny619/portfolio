@@ -10,6 +10,7 @@ import type { ReactNode } from "react";
      1.              번호 목록
      > 인용
      ```코드블록```  (``` 뒤에 언어 이름 적어도 됩니다)
+     | 표 | 표 |
      ---             구분선
      인라인: `코드`  **굵게**  *기울임*  [링크](주소)  ![이미지](주소)  ![[옵시디언이미지]]
    ══════════════════════════════════════════════════════════════ */
@@ -99,6 +100,34 @@ function inline(text: string, keyPrefix: string): ReactNode[] {
   return out;
 }
 
+function isTableRow(line: string) {
+  const trimmed = line.trim();
+  return trimmed.startsWith("|") && trimmed.endsWith("|") && trimmed.includes("|");
+}
+
+function splitTableRow(line: string) {
+  return line
+    .trim()
+    .replace(/^\|/, "")
+    .replace(/\|$/, "")
+    .split("|")
+    .map((cell) => cell.trim());
+}
+
+function tableAlign(cell: string) {
+  const normalized = cell.trim();
+  if (!/^:?-{3,}:?$/.test(normalized)) return null;
+  if (normalized.startsWith(":") && normalized.endsWith(":")) return "center";
+  if (normalized.endsWith(":")) return "right";
+  return "left";
+}
+
+function parseTableDivider(line: string) {
+  if (!isTableRow(line)) return null;
+  const aligns = splitTableRow(line).map(tableAlign);
+  return aligns.every(Boolean) ? aligns : null;
+}
+
 /* ── 블록 ──────────────────────────────────────────────────── */
 
 export function renderMarkdown(source: string) {
@@ -136,6 +165,54 @@ export function renderMarkdown(source: string) {
         <pre key={`c${key++}`} data-lang={lang || undefined}>
           <code>{code.join("\n")}</code>
         </pre>,
+      );
+      continue;
+    }
+
+    // 표
+    const divider = i + 1 < lines.length ? parseTableDivider(lines[i + 1]) : null;
+    if (isTableRow(line) && divider) {
+      paragraph(buffer);
+      const headers = splitTableRow(line);
+      const rows: string[][] = [];
+      i += 2;
+
+      while (i < lines.length && isTableRow(lines[i])) {
+        rows.push(splitTableRow(lines[i]));
+        i += 1;
+      }
+
+      blocks.push(
+        <div className="md-table-wrap" key={`t${key++}`}>
+          <table>
+            <thead>
+              <tr>
+                {headers.map((header, index) => (
+                  <th
+                    key={index}
+                    style={{ textAlign: divider[index] ?? "left" }}
+                  >
+                    {inline(header, `th${key}-${index}`)}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, rowIndex) => (
+                <tr key={rowIndex}>
+                  {headers.map((_, cellIndex) => (
+                    <td
+                      key={cellIndex}
+                      style={{ textAlign: divider[cellIndex] ?? "left" }}
+                    >
+                      {inline(row[cellIndex] ?? "", `td${key}-${rowIndex}-${cellIndex}`)}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>,
       );
       continue;
     }

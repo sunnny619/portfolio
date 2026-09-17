@@ -347,6 +347,17 @@ a {
   font-weight: 400;
 }
 
+.profile-contact dd a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 160ms ease;
+}
+
+.profile-contact dd a:hover {
+  color: var(--orange);
+}
+
 .content-section {
   background: #ffffff;
   padding: 130px 160px 160px;
@@ -904,7 +915,8 @@ a {
 .article-body ul,
 .article-body ol,
 .article-body blockquote,
-.article-body pre {
+.article-body pre,
+.article-body .md-table-wrap {
   margin: 0 0 24px;
 }
 
@@ -946,6 +958,43 @@ a {
   border-radius: 0;
   background: transparent;
   color: inherit;
+}
+
+.article-body .md-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #ebeae4;
+  border-radius: 14px;
+}
+
+.article-body table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.article-body th,
+.article-body td {
+  padding: 13px 16px;
+  border-bottom: 1px solid #ebeae4;
+  vertical-align: top;
+}
+
+.article-body th {
+  background: #fbfaf6;
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.article-body tr:last-child td {
+  border-bottom: 0;
+}
+
+.article-body td code,
+.article-body th code {
+  white-space: nowrap;
 }
 
 .article-body blockquote {

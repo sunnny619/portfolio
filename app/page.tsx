@@ -76,9 +76,25 @@ export default function Home() {
                     <dt>Email</dt>
                     <dd>ellieella2031@gmail.com</dd>
                     <dt>Linkedin</dt>
-                    <dd>지선의</dd>
+                    <dd>
+                      <a
+                        href="https://www.linkedin.com/in/%EC%84%A0%EC%9D%98-%EC%A7%80-b2998432b/"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        지선의
+                      </a>
+                    </dd>
                     <dt>GitHub</dt>
-                    <dd>sunny619</dd>
+                    <dd>
+                      <a
+                        href="https://github.com/sunnny619"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        sunnny619
+                      </a>
+                    </dd>
                   </dl>
                 </div>
               </div>
@@ -102,10 +118,9 @@ export default function Home() {
 
             <section className="skills-block motion-item profile-motion-3">
               <h2>Skills</h2>
-              <SkillRow label="Languages" text="영락고등학교 졸업" />
-              <SkillRow label="Frameworks" text="숭실대학교 컴퓨터학부 졸업예정" />
-              <SkillRow label="Tooling" text="숭실대학교 컴퓨터학부 졸업예정" />
-              <SkillRow label="Collaboration" text="숭실대학교 컴퓨터학부 졸업예정" />
+              <SkillRow label="Languages" text="Python, Dart, Java, C/C++" />
+              <SkillRow label="Frameworks" text="Flutter, Next.js, FastAPI" />
+              <SkillRow label="Collaboration" text="Git, GitHub, Notion, Slack, Figma, Photoshop" />
               <Image
                 src="/sun.png"
                 alt=""
