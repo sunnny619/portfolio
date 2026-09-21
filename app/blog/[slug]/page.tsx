@@ -23,12 +23,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!post) {
     return {
-      title: "글을 찾을 수 없습니다 — SEONEUI",
+      title: "글을 찾을 수 없습니다 - SEONEUI",
     };
   }
 
   return {
-    title: `${post.title} — SEONEUI`,
+    title: `${post.title} - SEONEUI`,
     description: post.summary,
   };
 }

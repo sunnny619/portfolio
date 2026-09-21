@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
+import SmoothAnchors from "./smooth-anchors";
 
 export const metadata: Metadata = {
   title: "SEONEUI Portfolio",
@@ -10,7 +11,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body>
+        <SmoothAnchors />
+        {children}
+      </body>
     </html>
   );
 }

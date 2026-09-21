@@ -15,27 +15,27 @@ const projects: Project[] = [
   {
     id: "cogo",
     src: "/projects/COGO.png",
-    alt: "COGO — 대학동문 커피챗 서비스",
+    alt: "COGO - 대학동문 커피챗 서비스",
   },
   {
     id: "safetypass",
     src: "/projects/SafetyPass.png",
-    alt: "SafetyPass — AI 기반 대형 공연장 긴급 대피 최적화 서비스",
+    alt: "SafetyPass - AI 기반 대형 공연장 긴급 대피 최적화 서비스",
   },
   {
     id: "ongi",
     src: "/projects/ongi.png",
-    alt: "온기 — 어르신 복약 서비스 플랫폼",
+    alt: "온기 - 어르신 복약 서비스 플랫폼",
   },
   {
     id: "socratia",
     src: "/projects/socratia.png",
-    alt: "소크라티아 — 소크라테스식 문답 기반 AI 전공 학습 튜터",
+    alt: "소크라티아 - 소크라테스식 문답 기반 AI 전공 학습 튜터",
   },
   {
     id: "ssumate",
     src: "/projects/SSUMATE.png",
-    alt: "SSUMATE — 숭실대학교 창업지원단 동아리 협업 에이전트",
+    alt: "SSUMATE - 숭실대학교 창업지원단 동아리 협업 에이전트",
   },
 ];
 
