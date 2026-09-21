@@ -107,3 +107,33 @@ export function getCategories() {
     .map(([name, count]) => ({ name, count }))
     .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, "ko"));
 }
+
+/** 서울 기준 오늘 (YYYY-MM-DD). 빌드 서버의 표준시가 무엇이든 같은 값이 나온다. */
+function today() {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+}
+
+/** 2026.9.7 처럼 적어도 2026-09-07 로 맞춰 문자열끼리 비교할 수 있게 한다. */
+function comparableDate(value: string) {
+  const [y, m, d] = value.split(/[-.]/).map((part) => part.trim());
+  if (!y || !m || !d) return "";
+  return `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
+}
+
+/* 홈 Posts 섹션에 쓰는 목록 — 오늘까지 발행된 글 중 최신 몇 개.
+   날짜를 미래로 적어둔 글은 그날이 되면 저절로 올라옵니다.
+   (날짜 형식이 깨진 글은 숨기지 않고 그대로 둡니다) */
+export function getRecentPosts(limit = HOME_POST_COUNT) {
+  const now = today();
+  return getAllPosts()
+    .filter((post) => {
+      const date = comparableDate(post.date);
+      return date === "" || date <= now;
+    })
+    .slice(0, limit);
+}

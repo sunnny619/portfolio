@@ -128,6 +128,93 @@ function parseTableDivider(line: string) {
   return aligns.every(Boolean) ? aligns : null;
 }
 
+/* ── 목록 ──────────────────────────────────────────────────── */
+
+const LIST_ITEM = /^(\s*)([-*]|\d+\.)\s+(.*)$/;
+
+type ListItem = {
+  ordered: boolean;
+  text: string;
+  /** 항목 아래에 들여쓴 설명 문단 */
+  body: string[];
+  children: ListItem[];
+};
+
+/** 탭은 4칸으로 세어 들여쓰기 깊이를 잰다 (옵시디언이 탭을 쓴다) */
+function indentWidth(prefix: string) {
+  let width = 0;
+  for (const ch of prefix) {
+    if (ch === "\t") width += 4;
+    else if (ch === " ") width += 1;
+    else break;
+  }
+  return width;
+}
+
+function isListItem(line: string) {
+  return LIST_ITEM.test(line);
+}
+
+/** 목록에 딸린 들여쓴 본문 줄 — 목록 기호 없이 공백으로 시작한다 */
+function isListBody(line: string) {
+  return line.trim() !== "" && /^\s/.test(line) && !isListItem(line);
+}
+
+/** 들여쓰기 깊이로 목록을 트리로 만든다 */
+function buildListTree(lines: string[]) {
+  const roots: ListItem[] = [];
+  const stack: { item: ListItem; indent: number }[] = [];
+
+  for (const line of lines) {
+    const match = LIST_ITEM.exec(line);
+
+    if (!match) {
+      // 항목 아래 들여쓴 설명 줄 → 가장 가까운 항목에 붙인다
+      const text = line.trim();
+      if (text && stack.length > 0) stack[stack.length - 1].item.body.push(text);
+      continue;
+    }
+
+    const indent = indentWidth(match[1]);
+    const item: ListItem = {
+      ordered: /\d/.test(match[2]),
+      text: match[3].trim(),
+      body: [],
+      children: [],
+    };
+
+    while (stack.length > 0 && stack[stack.length - 1].indent >= indent) stack.pop();
+
+    if (stack.length === 0) roots.push(item);
+    else stack[stack.length - 1].item.children.push(item);
+
+    stack.push({ item, indent });
+  }
+
+  return roots;
+}
+
+function renderList(items: ListItem[], keyPrefix: string): ReactNode {
+  const ordered = items[0]?.ordered ?? false;
+  const children = items.map((item, index) => (
+    <li key={index}>
+      {inline(item.text, `${keyPrefix}-${index}`)}
+      {item.body.map((paragraph, bodyIndex) => (
+        <p key={bodyIndex}>{inline(paragraph, `${keyPrefix}-${index}-b${bodyIndex}`)}</p>
+      ))}
+      {item.children.length > 0
+        ? renderList(item.children, `${keyPrefix}-${index}-c`)
+        : null}
+    </li>
+  ));
+
+  return ordered ? (
+    <ol key={keyPrefix}>{children}</ol>
+  ) : (
+    <ul key={keyPrefix}>{children}</ul>
+  );
+}
+
 /* ── 블록 ──────────────────────────────────────────────────── */
 
 export function renderMarkdown(source: string) {
@@ -264,31 +351,33 @@ export function renderMarkdown(source: string) {
       continue;
     }
 
-    // 목록
-    const bullet = /^\s*([-*])\s+(.*)$/.exec(line);
-    const numbered = /^\s*\d+\.\s+(.*)$/.exec(line);
-    if (bullet || numbered) {
+    // 목록 — 들여쓰기로 중첩되고, 항목 아래 들여쓴 문단도 함께 묶는다
+    if (isListItem(line)) {
       paragraph(buffer);
-      const ordered = Boolean(numbered);
-      const items: string[] = [];
+      const raw: string[] = [];
+
       while (i < lines.length) {
-        const b = /^\s*([-*])\s+(.*)$/.exec(lines[i]);
-        const n = /^\s*\d+\.\s+(.*)$/.exec(lines[i]);
-        if (ordered && n) items.push(n[1]);
-        else if (!ordered && b) items.push(b[2]);
-        else break;
-        i += 1;
+        const current = lines[i];
+
+        if (isListItem(current) || isListBody(current)) {
+          raw.push(current);
+          i += 1;
+          continue;
+        }
+
+        // 빈 줄 하나로는 목록이 끊기지 않는다 — 다음 줄이 아직 목록이면 이어간다
+        if (current.trim() === "") {
+          const next = lines[i + 1];
+          if (next !== undefined && (isListItem(next) || isListBody(next))) {
+            i += 1;
+            continue;
+          }
+        }
+
+        break;
       }
-      const children = items.map((item, index) => (
-        <li key={index}>{inline(item, `l${key}-${index}`)}</li>
-      ));
-      blocks.push(
-        ordered ? (
-          <ol key={`o${key++}`}>{children}</ol>
-        ) : (
-          <ul key={`u${key++}`}>{children}</ul>
-        ),
-      );
+
+      blocks.push(renderList(buildListTree(raw), `l${key++}`));
       continue;
     }
 

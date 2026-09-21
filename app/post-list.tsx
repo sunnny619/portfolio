@@ -1,12 +1,12 @@
 import Link from "next/link";
 
-import { getAllPosts, HOME_POST_COUNT } from "@/lib/posts";
+import { getRecentPosts } from "@/lib/posts";
 
-/* 홈 Posts 섹션 — 최신 몇 개만 보여주고 나머지는 /blog 로 넘긴다.
+/* 홈 Posts 섹션 — 오늘 기준 최신 4개만 보여주고 나머지는 /blog 로 넘긴다.
    글 내용은 content/posts/*.md 에서 관리합니다. */
 
 export default function PostList() {
-  const recent = getAllPosts().slice(0, HOME_POST_COUNT);
+  const recent = getRecentPosts();
 
   return (
     <div className="post-wrap">

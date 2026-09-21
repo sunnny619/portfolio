@@ -6,6 +6,10 @@ import ProjectStack from "./project-stack";
 import ScrollMotion from "./scroll-motion";
 import SiteHeader from "./site-header";
 
+/* Posts 목록이 "오늘"을 기준으로 잘리기 때문에 정적 페이지를 한 시간마다 다시 만든다.
+   이게 없으면 빌드한 날짜에 목록이 고정된다. */
+export const revalidate = 3600;
+
 
 export default function Home() {
   return (
