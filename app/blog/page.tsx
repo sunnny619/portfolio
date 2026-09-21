@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import SiteHeader from "../site-header";
+import SiteHeader from "@/app/_components/site-header";
 import { getAllPosts, getCategories } from "@/lib/posts";
 
 export const metadata: Metadata = {

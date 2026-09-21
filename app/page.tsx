@@ -1,10 +1,10 @@
 import Image from "next/image";
-import ExperienceList from "./experience-list";
-import HeroTitle from "./hero-title";
-import PostList from "./post-list";
-import ProjectStack from "./project-stack";
-import ScrollMotion from "./scroll-motion";
-import SiteHeader from "./site-header";
+import ExperienceList from "@/app/_components/experience-list";
+import HeroTitle from "@/app/_components/hero-title";
+import PostList from "@/app/_components/post-list";
+import ProjectStack from "@/app/_components/project-stack";
+import ScrollMotion from "@/app/_components/scroll-motion";
+import SiteHeader from "@/app/_components/site-header";
 
 /* Posts 목록이 "오늘"을 기준으로 잘리기 때문에 정적 페이지를 한 시간마다 다시 만든다.
    이게 없으면 빌드한 날짜에 목록이 고정된다. */
@@ -161,11 +161,6 @@ export default function Home() {
 
       <footer className="footer">
         <p>Copyright © 2026 SeonEui Jee</p>
-        <div className="footer-icons" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
       </footer>
     </>
   );
