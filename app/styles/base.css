@@ -1,0 +1,127 @@
+/* 기본 토큰 · 리셋 · 사이트 헤더 · 스크롤 모션 */
+
+/* 브레이크포인트는 아래 다섯 개만 씁니다. 새로 만들지 말고 골라 쓰세요.
+     1100px  노트북      — 홈 레이아웃 전환
+     1000px  작은 노트북 — 본문 + 사이드바 → 한 단
+      860px  태블릿      — 카드·목록 다단 → 한 단
+      720px  큰 휴대폰   — 케이스 스터디 상세
+      640px  휴대폰      — 여백·글자 크기 축소 */
+
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+
+:root {
+  --paper: #f7f6f3;
+  --ink: #202020;
+  --muted: #9b9b9b;
+  --light: #f7f5f5;
+  --line: #222222;
+  --orange: #ff6a21;
+  --max: 1560px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* scroll-behavior: smooth 는 여기 두지 않는다 —
+     페이지 이동 시 맨 위로 되돌아가는 동작까지 애니메이션이 되어
+     긴 페이지가 아래에서 위로 훑고 올라간다.
+     같은 페이지 안의 # 링크는 app/smooth-anchors.tsx 가 처리한다. */
+  scroll-padding-top: 54px;
+  /* hidden 은 스크롤 컨테이너를 만들어 position: sticky 를 깨뜨린다 */
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  overflow-x: clip;
+  /* 한글은 단어 중간에서 줄이 끊기지 않게 — 띄어쓰기에서만 바꾼다.
+     이게 없으면 "같았습니 / 다." 처럼 잘린다. */
+  word-break: keep-all;
+  /* 단어 하나가 줄보다 긴 경우(긴 URL 등)에만 잘라서 넘치지 않게 한다 */
+  overflow-wrap: break-word;
+  color: var(--ink);
+  background: var(--paper) url("/background-optimized.jpg") top center / 1920px auto repeat-y;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  height: 54px;
+  padding: 0 132px;
+  background: rgba(250, 250, 249, 0.9);
+  backdrop-filter: blur(10px);
+}
+
+.brand {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.nav {
+  position: absolute;
+  left: 50%;
+  display: flex;
+  gap: 58px;
+  transform: translateX(-50%);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.nav a {
+  transition: color 160ms ease;
+}
+
+.nav a.is-active {
+  color: var(--orange);
+}
+
+.motion-item {
+  opacity: 0;
+  translate: 0 28px;
+  transition:
+    opacity 700ms cubic-bezier(0.22, 0.72, 0.28, 1),
+    translate 700ms cubic-bezier(0.22, 0.72, 0.28, 1);
+  transition-delay: var(--motion-delay, 0ms);
+}
+
+.motion-item.is-visible {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.profile-motion-1 {
+  --motion-delay: 0ms;
+}
+
+.profile-motion-2 {
+  --motion-delay: 140ms;
+}
+
+.profile-motion-3 {
+  --motion-delay: 280ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-sun {
+    animation: none;
+  }
+
+  .motion-item {
+    opacity: 1;
+    translate: 0 0;
+    transition: none;
+  }
+}

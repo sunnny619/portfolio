@@ -1,10 +1,10 @@
 import Image from "next/image";
-import ExperienceList from "./experience-list";
-import HeroTitle from "./hero-title";
-import PostList from "./post-list";
-import ProjectStack from "./project-stack";
-import ScrollMotion from "./scroll-motion";
-import SiteHeader from "./site-header";
+import ExperienceList from "@/app/_components/experience-list";
+import HeroTitle from "@/app/_components/hero-title";
+import PostList from "@/app/_components/post-list";
+import ProjectStack from "@/app/_components/project-stack";
+import ScrollMotion from "@/app/_components/scroll-motion";
+import SiteHeader from "@/app/_components/site-header";
 
 /* Posts 목록이 "오늘"을 기준으로 잘리기 때문에 정적 페이지를 한 시간마다 다시 만든다.
    이게 없으면 빌드한 날짜에 목록이 고정된다. */
@@ -48,10 +48,10 @@ export default function Home() {
                 <strong>안녕하세요</strong>
               </p>
               <p>
-                <strong>같이 일하면</strong>
+                <strong>함께할수록</strong>
               </p>
               <p>
-                <strong>하루가 환해지는 개발자</strong>
+                <strong>든든한 개발자</strong>
               </p>
               <p>
                 <strong>
@@ -59,11 +59,13 @@ export default function Home() {
                 </strong>
               </p>
               <small>
-                한 번에 풀린 문제는 거의 없었습니다.
+                &lsquo;덕필유린(德必有隣)&rsquo;,
                 <br />
-                대부분의 시간은 안 되는 이유를 하나씩 지워나가는 데 썼고,
+                덕이 있는 사람은 외롭지 않다는 뜻입니다.
                 <br />
-                그 과정을 기록하고 공유하는 걸 좋아합니다.
+                저는 받은 도움을 기억하고, 제가 도울 수 있는 순간에는
+                <br />
+                먼저 손을 내미는 사람이고자 합니다.
               </small>
 
               <div className="profile-contact">
@@ -137,8 +139,8 @@ export default function Home() {
         </section>
 
         <Section
-          id="experience"
-          title="Experience"
+          id="experiences"
+          title="Experiences"
           subtitle="다양한 환경에서 쌓은 경험들입니다."
           motionBody={false}
         >
@@ -154,18 +156,13 @@ export default function Home() {
           <ProjectStack />
         </Section>
 
-        <Section id="posts" title="Posts" subtitle="공부한 내용과 코딩 테스트 풀이를 기록합니다.">
+        <Section id="posts" title="Posts" subtitle="공부한 내용과 경험을 기록합니다.">
           <PostList />
         </Section>
       </main>
 
       <footer className="footer">
         <p>Copyright © 2026 SeonEui Jee</p>
-        <div className="footer-icons" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
       </footer>
     </>
   );

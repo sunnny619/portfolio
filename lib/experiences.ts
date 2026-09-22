@@ -2,7 +2,7 @@
    Experience 데이터 — 홈 섹션과 상세 페이지가 함께 씁니다.
    아래 experiences 배열만 고치면 카드와 상세 페이지가 같이 늘어납니다.
 
-   id 가 곧 주소입니다 — gdgoc-soongsil → /experience/gdgoc-soongsil
+   id 가 곧 주소입니다 — gdgoc-soongsil → /experiences/gdgoc-soongsil
    detail 을 채우면 케이스 스터디형 상세 페이지가 되고,
    비워두면 요약과 주요 성과만 있는 기본 레이아웃으로 나옵니다.
    ══════════════════════════════════════════════════════════════ */
@@ -121,19 +121,19 @@ export const experiences: Experience[] = [
       ],
       photos: [
         {
-          src: "/experience/gdgoc-1.jpg",
+          src: "/experiences/gdgoc-1.jpg",
           alt: "수료증을 들고 단체 사진을 찍는 GDSC EXHIBITION 참가자들",
           width: 1200,
           height: 903,
         },
         {
-          src: "/experience/gdgoc-2.jpg",
+          src: "/experiences/gdgoc-2.jpg",
           alt: "행사장 무대 앞에 모여 단체 사진을 찍는 커뮤니티 멤버들",
           width: 1200,
           height: 900,
         },
         {
-          src: "/experience/gdgoc-3.jpg",
+          src: "/experiences/gdgoc-3.jpg",
           alt: "강의실에서 손하트를 만들며 단체 사진을 찍는 커뮤니티 멤버들",
           width: 1178,
           height: 868,
@@ -266,9 +266,9 @@ export const experiences: Experience[] = [
     summary:
       "Google Student Ambassador 주요 활동으로는 Gemini의 학생 저변 확대를 위한 마케팅 전략 수립 및 실행을 주도했습니다.",
     points: [
-      "온·오프라인 하이브리드 마케팅 전개",
-      "체험형 오프라인 부스 운영",
-      "소셜 바이럴 마케팅 미션 진행",
+      "Phase 1 : Google AI Pro for Students 사인업 미션을 맡아, 14개 학과·6개 동아리 단톡방 홍보와 인스타그램 카드뉴스, VEO 챌린지 릴스로 온라인을 공략하고 Final Event와 대동제에서 체험형 부스를 운영했습니다.",
+      "Phase 2 : Gemini 소셜 바이럴 미션을 맡아 '친구, 선배, 연인, 가족' 네 페르소나의 숏폼과 바이럴 밈을 제작했습니다. 커피빵 내기 릴스가 노출 8,059건으로 가장 큰 반응을 얻었습니다.",
+      "운영 : 두 미션 모두 현업 구글 실무자 앞에서 기획안을 발표해 승인과 예산을 받고, 캠페인이 끝난 뒤 결과를 숫자로 정리해 다시 보고했습니다.",
     ],
     detail: {
       label: "대외활동 - Google Student Ambassador",
@@ -277,19 +277,19 @@ export const experiences: Experience[] = [
       ],
       photos: [
         {
-          src: "/experience/gsa-1.jpg",
+          src: "/experiences/gsa-1.jpg",
           alt: "'Gemini와 점프를' 현수막을 건 야외 체험 부스",
           width: 1200,
           height: 900,
         },
         {
-          src: "/experience/gsa-2.jpg",
+          src: "/experiences/gsa-2.jpg",
           alt: "#Team Gemini 안내판을 세운 실내 부스와 참가 안내 포스터",
           width: 1200,
           height: 900,
         },
         {
-          src: "/experience/gsa-3.jpg",
+          src: "/experiences/gsa-3.jpg",
           alt: "대동제 야외 부스에서 게임 체험에 참여하는 학생",
           width: 1200,
           height: 900,

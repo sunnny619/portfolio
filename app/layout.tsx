@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
-import SmoothAnchors from "./smooth-anchors";
+import SmoothAnchors from "@/app/_components/smooth-anchors";
 
 export const metadata: Metadata = {
   title: "SEONEUI Portfolio",
