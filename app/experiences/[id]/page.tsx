@@ -45,8 +45,8 @@ export default async function ExperiencePage({ params }: Props) {
 
       <main className="case">
         <div className="case-back">
-          <Link className="article-back" href="/#experience">
-            Experience
+          <Link className="article-back" href="/#experiences">
+            Experiences
           </Link>
         </div>
 

@@ -122,7 +122,8 @@
 }
 
 .intro-card p:nth-child(4) strong {
-  margin: 10px 0 0 0;
+  /* 바로 위 '든든한 개발자' 와 시작점이 겹치지 않게 오른쪽으로 민다 */
+  margin: 10px 0 0 56px;
   transform: rotate(5deg);
 }
 
@@ -254,7 +255,7 @@
   padding: 130px 160px 160px;
 }
 
-#experience {
+#experiences {
   margin-top: 200px;
 }
 

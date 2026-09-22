@@ -6,7 +6,7 @@ import { getAllPosts, getCategories } from "@/lib/posts";
 
 export const metadata: Metadata = {
   title: "Blog - SEONEUI",
-  description: "공부한 내용과 코딩 테스트 풀이를 기록합니다.",
+  description: "공부한 내용과 경험을 기록합니다.",
 };
 
 const ALL = "전체";
