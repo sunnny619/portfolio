@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import SiteHeader from "@/app/_components/site-header";
 import { getAllPosts, getPost } from "@/lib/posts";
 import { renderMarkdown } from "@/lib/markdown";
+import { getTagStyle } from "@/lib/post-tags";
 
 import GiscusComments from "./giscus-comments";
 import ArticleToc from "./toc";
@@ -55,7 +56,9 @@ export default async function BlogPostPage({ params }: Props) {
             <header className="article-head">
               <div className="blog-post-meta">
                 <time className="post-date">{post.dateLong}</time>
-                <span className="post-tag">{post.tag}</span>
+                <span className="post-tag" style={getTagStyle(post.tag)}>
+                  {post.tag}
+                </span>
               </div>
               <h1>{post.title}</h1>
               {post.summary ? <p>{post.summary}</p> : null}

@@ -95,12 +95,13 @@
 }
 
 .blog-cat.is-active {
-  background: #ffe9dd;
-  color: #c2441a;
+  border-color: var(--tag-border);
+  background: var(--tag-bg);
+  color: var(--tag-color);
 }
 
 .blog-cat.is-active em {
-  color: #c2441a;
+  color: var(--tag-color);
 }
 
 /* ── 오른쪽: 글 목록 ──────────────────────────── */

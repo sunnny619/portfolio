@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import SiteHeader from "@/app/_components/site-header";
+import { getTagStyle } from "@/lib/post-tags";
 import { getAllPosts, getCategories } from "@/lib/posts";
 
 export const metadata: Metadata = {
@@ -72,7 +73,9 @@ export default async function BlogPage({
                   <Link href={`/blog/${post.slug}`} className="blog-post-link">
                     <div className="blog-post-meta">
                       <time className="post-date">{post.dateLabel}</time>
-                      <span className="post-tag">{post.tag}</span>
+                      <span className="post-tag" style={getTagStyle(post.tag)}>
+                        {post.tag}
+                      </span>
                     </div>
                     <h3 className="blog-post-title">{post.title}</h3>
                     <p className="blog-post-summary">{post.summary}</p>
@@ -103,6 +106,7 @@ function CategoryLink({
     <Link
       href={href}
       className={active ? "blog-cat is-active" : "blog-cat"}
+      style={getTagStyle(name)}
       aria-current={active ? "page" : undefined}
     >
       <span>{name}</span>
