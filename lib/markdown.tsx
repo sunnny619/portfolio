@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
    아주 작은 마크다운 렌더러 — 추가 패키지 없이 동작합니다.
 
    지원하는 문법
-     ## / ###        제목 (목차에 잡히는 건 ## 입니다)
+     ## / ### / #### 제목
      빈 줄로 나눈 문단
      - 또는 *        글머리 목록
      1.              번호 목록
@@ -15,7 +15,7 @@ import type { ReactNode } from "react";
      인라인: `코드`  **굵게**  *기울임*  [링크](주소)  ![이미지](주소)  ![[옵시디언이미지]]
    ══════════════════════════════════════════════════════════════ */
 
-export type Heading = { id: string; text: string };
+export type Heading = { id: string; text: string; level: 2 | 3 | 4 };
 
 /** 제목 글자로 앵커 id 를 만든다. 한글은 그대로 두고 공백만 - 로 바꾼다. */
 function slugify(text: string, used: Set<string>) {
@@ -98,6 +98,17 @@ function inline(text: string, keyPrefix: string): ReactNode[] {
   }
 
   return out;
+}
+
+function inlineWithBreaks(lines: string[], keyPrefix: string): ReactNode[] {
+  return lines.flatMap((line, index) => {
+    const nodes =
+      line.trim() === "" ? ["\u00a0"] : inline(line, `${keyPrefix}-${index}`);
+
+    return index === lines.length - 1
+      ? nodes
+      : [...nodes, <br key={`${keyPrefix}-br${index}`} />];
+  });
 }
 
 function isTableRow(line: string) {
@@ -305,22 +316,27 @@ export function renderMarkdown(source: string) {
     }
 
     // 제목
-    const heading = /^(#{2,3})\s+(.*)$/.exec(line);
+    const heading = /^(#{2,4})\s+(.*)$/.exec(line);
     if (heading) {
       paragraph(buffer);
       const level = heading[1].length;
       const text = heading[2].trim();
       const id = slugify(text, used);
-      if (level === 2) headings.push({ id, text });
+      headings.push({ id, text, level: level as Heading["level"] });
+
       blocks.push(
         level === 2 ? (
           <h2 key={`h${key++}`} id={id}>
             {inline(text, `h${key}`)}
           </h2>
-        ) : (
+        ) : level === 3 ? (
           <h3 key={`h${key++}`} id={id}>
             {inline(text, `h${key}`)}
           </h3>
+        ) : (
+          <h4 key={`h${key++}`} id={id}>
+            {inline(text, `h${key}`)}
+          </h4>
         ),
       );
       i += 1;
@@ -345,7 +361,7 @@ export function renderMarkdown(source: string) {
       }
       blocks.push(
         <blockquote key={`q${key++}`}>
-          {inline(quote.join(" ").trim(), `q${key}`)}
+          {inlineWithBreaks(quote, `q${key}`)}
         </blockquote>,
       );
       continue;

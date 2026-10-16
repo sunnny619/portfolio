@@ -41,7 +41,7 @@ export default function ArticleToc({ headings }: { headings: Heading[] }) {
     <nav className="toc" aria-label="목차">
       <ul>
         {headings.map((heading) => (
-          <li key={heading.id}>
+          <li className={`toc-level-${heading.level}`} key={heading.id}>
             <a
               href={`#${heading.id}`}
               className={activeId === heading.id ? "is-active" : undefined}
