@@ -20,11 +20,12 @@ export default function SmoothAnchors() {
       const href = link.getAttribute("href");
       if (!href) return;
 
-      // "#id" 와 "/#id" 둘 다 받는다 — 헤더는 /#profile 형태를 쓴다
+      // "#id" 와 "<현재 경로>#id" 둘 다 받는다 — 헤더는 /portfolio#profile 형태를 쓴다
+      const path = window.location.pathname;
       const hash = href.startsWith("#")
         ? href
-        : href.startsWith("/#") && window.location.pathname === "/"
-          ? href.slice(1)
+        : href.startsWith(`${path}#`)
+          ? href.slice(path.length)
           : "";
       if (hash.length < 2) return;
 

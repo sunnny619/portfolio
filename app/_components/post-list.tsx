@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getTagStyle } from "@/lib/post-tags";
 import { getRecentPosts } from "@/lib/posts";
 
-/* 홈 Posts 섹션 — 오늘 기준 최신 4개만 보여주고 나머지는 /blog 로 넘긴다.
+/* 홈 Posts 섹션 — 오늘 기준 최신 4개만 보여주고 나머지는 메인(/) 블로그로 넘긴다.
    글 내용은 content/posts/*.md 에서 관리합니다. */
 
 export default function PostList() {
@@ -25,7 +25,7 @@ export default function PostList() {
         ))}
       </ul>
 
-      <Link className="post-more" href="/blog">
+      <Link className="post-more" href="/">
         블로그 전체 보기
       </Link>
     </div>

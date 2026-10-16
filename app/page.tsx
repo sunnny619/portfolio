@@ -1,213 +1,116 @@
-import Image from "next/image";
-import ExperienceList from "@/app/_components/experience-list";
-import HeroTitle from "@/app/_components/hero-title";
-import PostList from "@/app/_components/post-list";
-import ProjectStack from "@/app/_components/project-stack";
-import ScrollMotion from "@/app/_components/scroll-motion";
+import type { Metadata } from "next";
+import Link from "next/link";
+
 import SiteHeader from "@/app/_components/site-header";
+import { getTagStyle } from "@/lib/post-tags";
+import { getAllPosts, getCategories } from "@/lib/posts";
 
-/* Posts 목록이 "오늘"을 기준으로 잘리기 때문에 정적 페이지를 한 시간마다 다시 만든다.
-   이게 없으면 빌드한 날짜에 목록이 고정된다. */
-export const revalidate = 3600;
+export const metadata: Metadata = {
+  title: "Blog - SEONEUI",
+  description: "공부한 내용과 경험을 기록합니다.",
+};
 
+const ALL = "전체";
 
-export default function Home() {
+/* searchParams 는 Promise 라서 await 해야 합니다.
+   덕분에 ?category= 주소를 그대로 공유할 수 있고 JS 없이도 동작합니다. */
+export default async function BlogPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string | string[] }>;
+}) {
+  const raw = (await searchParams).category;
+  const selected = Array.isArray(raw) ? raw[0] : raw;
+
+  const posts = getAllPosts();
+  const categories = getCategories();
+  const known = categories.some((category) => category.name === selected);
+  const current = known && selected ? selected : ALL;
+
+  const visible =
+    current === ALL ? posts : posts.filter((post) => post.tag === current);
+
   return (
     <>
       <SiteHeader />
-      <ScrollMotion />
 
-      <main>
-        <section className="hero motion-section" id="home">
-          <div className="sun-wrap motion-item">
-            <Image
-              src="/sun.png"
-              alt=""
-              width={1254}
-              height={1254}
-              priority
-              className="hero-sun"
-            />
-          </div>
+      <main className="blog">
+        <header className="blog-head">
+          <p className="blog-eyebrow">Blog</p>
+          <h1>Posts</h1>
+        </header>
 
-          <div className="hero-copy motion-item">
-            <p className="side-note side-note-left">
-              Contact
-              <br />
-              eileelea2031@gmail.com
-            </p>
-            <HeroTitle />
-            <p className="side-note side-note-right">Software Engineer</p>
-          </div>
-        </section>
-
-        <section className="profile-section motion-section" id="profile">
-          <div className="profile-grid">
-            <section className="intro-card motion-item profile-motion-1" aria-label="Introduction">
-              <p>
-                <strong>안녕하세요</strong>
-              </p>
-              <p>
-                <strong>함께할수록</strong>
-              </p>
-              <p>
-                <strong>든든한 개발자</strong>
-              </p>
-              <p>
-                <strong>
-                  <span>지선의</span>입니다.
-                </strong>
-              </p>
-              <small>
-                &lsquo;덕필유린(德必有隣)&rsquo;,
-                <br />
-                덕이 있는 사람은 외롭지 않다는 뜻입니다.
-                <br />
-                저는 받은 도움을 기억하고, 제가 도울 수 있는 순간에는
-                <br />
-                먼저 손을 내미는 사람이고자 합니다.
-              </small>
-
-              <div className="profile-contact">
-                <div>
-                  <h2>Profile</h2>
-                  <dl>
-                    <dt>지선의</dt>
-                    <dd>SeonEui Jee</dd>
-                  </dl>
-                </div>
-                <div>
-                  <h2>Contact</h2>
-                  <dl>
-                    <dt>Email</dt>
-                    <dd>ellieella2031@gmail.com</dd>
-                    <dt>Linkedin</dt>
-                    <dd>
-                      <a
-                        href="https://www.linkedin.com/in/%EC%84%A0%EC%9D%98-%EC%A7%80-b2998432b/"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        지선의
-                      </a>
-                    </dd>
-                    <dt>GitHub</dt>
-                    <dd>
-                      <a
-                        href="https://github.com/sunnny619"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        sunnny619
-                      </a>
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </section>
-
-            <section className="info-list motion-item profile-motion-2">
-              <h2>Education</h2>
-              <InfoRow year="2022.02" text="영락고등학교 졸업" />
-              <InfoRow year="2027.02" text="숭실대학교 컴퓨터학부 졸업예정" />
-
-              <h2>Certifications</h2>
-              <InfoRow year="2015.03" text="GTQ그래픽기술자격 2급" note="한국생산성본부(KPC)" />
-              <InfoRow year="2023.06" text="MOS Excel Expert 2016" note="Microsoft / 국제공인자격" />
-              <InfoRow year="2026.09" text="정보처리기사" note="한국산업인력공단" />
-
-              <h2>Awards</h2>
-              <InfoRow year="2025.11" text="지능형 로봇 컨소시엄 창의적 종합설계 경진대회 대상" note="한영대학교에리카" />
-              <InfoRow year="2025.11" text="창의적 종합설계 경진대회 산업통상부장관상" note="산업통상부" />
-              <InfoRow year="2026.08" text="제 3회 AX 인터렉티브 콘텐츠 공모전 장려상" note="숭실대학교 교수학습혁신센터" />
-            </section>
-
-            <section className="skills-block motion-item profile-motion-3">
-              <h2>Skills</h2>
-              <SkillRow label="Languages" text="Python, Dart, Java, C/C++" />
-              <SkillRow label="Frameworks" text="Flutter, Next.js, FastAPI" />
-              <SkillRow label="Collaboration" text="Git, GitHub, Notion, Slack, Figma, Photoshop" />
-              <Image
-                src="/sun.png"
-                alt=""
-                width={1254}
-                height={1254}
-                className="mini-sun"
+        <div className="blog-layout">
+          <aside className="blog-side" aria-label="카테고리">
+            <h2 className="blog-side-title">Category</h2>
+            <nav className="blog-cats">
+              <CategoryLink
+                name={ALL}
+                count={posts.length}
+                current={current}
+                href="/"
               />
-            </section>
-          </div>
-        </section>
+              {categories.map((category) => (
+                <CategoryLink
+                  key={category.name}
+                  name={category.name}
+                  count={category.count}
+                  current={current}
+                  href={`/?category=${encodeURIComponent(category.name)}`}
+                />
+              ))}
+            </nav>
+          </aside>
 
-        <Section
-          id="experiences"
-          title="Experiences"
-          subtitle="다양한 환경에서 쌓은 경험들입니다."
-          motionBody={false}
-        >
-          <ExperienceList />
-        </Section>
+          <section className="blog-main" aria-label="글 목록">
+            <p className="blog-count">
+              {current === ALL ? "전체 글" : current} <b>{visible.length}</b>
+            </p>
 
-        <Section
-          id="projects"
-          title="Projects"
-          subtitle="다양한 기술을 활용하여 개발한 프로젝트들입니다."
-          motionBody={false}
-        >
-          <ProjectStack />
-        </Section>
-
-        <Section id="posts" title="Posts" subtitle="공부한 내용과 경험을 기록합니다.">
-          <PostList />
-        </Section>
+            <ul className="blog-posts">
+              {visible.map((post) => (
+                <li className="blog-post" key={post.slug}>
+                  <Link href={`/blog/${post.slug}`} className="blog-post-link">
+                    <div className="blog-post-meta">
+                      <time className="post-date">{post.dateLabel}</time>
+                      <span className="post-tag" style={getTagStyle(post.tag)}>
+                        {post.tag}
+                      </span>
+                    </div>
+                    <h3 className="blog-post-title">{post.title}</h3>
+                    <p className="blog-post-summary">{post.summary}</p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
       </main>
-
-      <footer className="footer">
-        <p>Copyright © 2026 SeonEui Jee</p>
-      </footer>
     </>
   );
 }
 
-function InfoRow({ year, text, note }: { year: string; text: string; note?: string }) {
-  return (
-    <p className="info-row">
-      <span>{year}</span>
-      <strong>{text}</strong>
-      {note ? <em>{note}</em> : null}
-    </p>
-  );
-}
-
-function SkillRow({ label, text }: { label: string; text: string }) {
-  return (
-    <p className="skill-row">
-      <span>{label}</span>
-      <strong>{text}</strong>
-    </p>
-  );
-}
-
-function Section({
-  id,
-  title,
-  subtitle,
-  children,
-  motionBody = true,
+function CategoryLink({
+  name,
+  count,
+  current,
+  href,
 }: {
-  id: string;
-  title: string;
-  subtitle: string;
-  children: React.ReactNode;
-  /** false 면 본문을 통째로 올리지 않고, 안쪽 요소가 각자 모션을 갖는다 */
-  motionBody?: boolean;
+  name: string;
+  count: number;
+  current: string;
+  href: string;
 }) {
+  const active = current === name;
   return (
-    <section className="content-section motion-section" id={id}>
-      <div className="section-heading motion-item">
-        <h2>{title}</h2>
-        <p>{subtitle}</p>
-      </div>
-      {motionBody ? <div className="motion-item">{children}</div> : children}
-    </section>
+    <Link
+      href={href}
+      className={active ? "blog-cat is-active" : "blog-cat"}
+      style={getTagStyle(name)}
+      aria-current={active ? "page" : undefined}
+    >
+      <span>{name}</span>
+      <em>{count}</em>
+    </Link>
   );
 }

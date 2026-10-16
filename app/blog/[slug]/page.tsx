@@ -47,7 +47,7 @@ export default async function BlogPostPage({ params }: Props) {
       <SiteHeader />
 
       <main className="article-page">
-        <Link className="article-back" href="/blog">
+        <Link className="article-back" href="/">
           Blog
         </Link>
 
