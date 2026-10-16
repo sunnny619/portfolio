@@ -17,6 +17,11 @@ const TAG_TONES: Record<string, TagTone> = {
     color: "#6b3fa0",
     border: "#d8c8f6",
   },
+  스터디: {
+    background: "#e3f6ef",
+    color: "#1f7a5a",
+    border: "#b5e3d1",
+  },
   전체: {
     background: "#ffe9dd",
     color: "#c2441a",
