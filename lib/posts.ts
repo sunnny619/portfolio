@@ -87,7 +87,12 @@ export function getAllPosts(): Post[] {
         body,
       };
     })
-    .sort((a, b) => b.date.localeCompare(a.date));
+    /* 같은 날짜면 파일 이름의 번호가 큰 글이 위로 — search-quality3 이 2 보다 먼저 */
+    .sort(
+      (a, b) =>
+        b.date.localeCompare(a.date) ||
+        b.slug.localeCompare(a.slug, undefined, { numeric: true }),
+    );
 }
 
 export function getPost(slug: string) {
